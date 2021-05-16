@@ -30,8 +30,8 @@ namespace QuizApp.AdminPages
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             answer = new AnswerModel();
-            answer.IsCorrectAnswer = (bool)check_IsCorrect.IsChecked;
-            answer.Content = txt_answerContent.Text;
+            answer.IsCorrect = (bool)check_IsCorrect.IsChecked;
+            answer.AnswerContent = txt_answerContent.Text;
             this.Close();
         }
 

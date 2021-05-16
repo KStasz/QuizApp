@@ -34,9 +34,12 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox Text="{Binding Path=QuestionName}" Margin="10" materialDesign:HintAssist.Hint="Nazwa pytania" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            VerticalAlignment="Center" />
+            <TextBox Text="{Binding Path=SelectedQuestion.Name, Mode=TwoWay}"  Margin="10" materialDesign:HintAssist.Hint="Nazwa pytania" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            VerticalAlignment="Center" Cursor="IBeam" />
             <ComboBox
+                ItemsSource="{Binding Path=AvilableQuestions}"
+                SelectedItem="{Binding Path=SelectedQuestion}"
+                DisplayMemberPath="Name"
                 materialDesign:HintAssist.Hint="Dostępne pytania"
                 materialDesign:HintAssist.FontFamily="Verdana"
                 Grid.Column="1"
@@ -54,11 +57,11 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
-                <ComboBox ItemsSource="{Binding Path=AvilableCategories, Mode=TwoWay}" materialDesign:HintAssist.Hint="Wybierz kategorię" materialDesign:HintAssist.FontFamily="Verdana"
+                <ComboBox ItemsSource="{Binding Path=AvilableCategories, Mode=TwoWay}" SelectedValue="{Binding Path=SelectedCategory.Name}" SelectedItem="{Binding Path=SelectedCategory}" SelectedValuePath="Name" materialDesign:HintAssist.Hint="Wybierz kategorię" materialDesign:HintAssist.FontFamily="Verdana"
                     Grid.Column="1" Margin="10" DisplayMemberPath="Name"
                     Style="{StaticResource MaterialDesignFloatingHintComboBox}" Cursor="Hand">
                 </ComboBox>
-                <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                <TextBox Text="{Binding Path=SelectedQuestion.QuestionContent, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" materialDesign:HintAssist.Hint="Treść pytania"
                     Grid.Row="1" Cursor="IBeam" />
             </Grid>
@@ -70,8 +73,8 @@
                 <DataGrid SelectedItem="{Binding Path=SelectedAnswer, Mode=TwoWay}" Margin="10" ItemsSource="{Binding Path=AvilableAnswers}" SelectionMode="Extended" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" SelectionUnit="FullRow" >
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
-                        <DataGridTextColumn Header="Odpowiedź" Binding="{Binding Content}"/>
-                        <DataGridTextColumn Header="Czy odpowiedź poprawna?" Binding="{Binding IsCorrectAnswer}"/>
+                        <DataGridTextColumn Header="Odpowiedź" Binding="{Binding AnswerContent}"/>
+                        <DataGridTextColumn Header="Czy odpowiedź poprawna?" Binding="{Binding IsCorrect}"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <Grid Grid.Row="1">

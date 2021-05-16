@@ -9,6 +9,8 @@ namespace Domain.Interfaces
 {
     public interface ICategoriesRepository
     {
-        List<CategoryModel> GetAllCategories(); 
+        List<CategoryModel> GetAllCategories();
+        CategoryModel GetCategory(int Id);
+        List<QuestionModel> GetCategoryQuestions(int CategoryId);
     }
 }

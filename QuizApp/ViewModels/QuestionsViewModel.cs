@@ -25,43 +25,8 @@ namespace QuizApp.ViewModels
         }
 
         #region Properties
-        private ObservableCollection<AnswerModel> _avilableAnswers = new ObservableCollection<AnswerModel>()
-        {
-            new AnswerModel()
-            {
-                Content = "a",
-                Id = 1,
-                IsCorrectAnswer = true
-            },
-            new AnswerModel()
-            {
-                Id = 2,
-                Content = "b",
-                IsCorrectAnswer = false
-            },
-            new AnswerModel()
-            {
-                Id = 3,
-                Content = "c",
-                IsCorrectAnswer = false
-            }
-        };
 
-        private List<CategoryModel> _avilableCategories;
-        public List<CategoryModel> AvilableCategories
-        {
-            get
-            {
-                return _avilableCategories;
-            }
-            set
-            {
-                _avilableCategories = value;
-                NotifyPropertyChanged(nameof(AvilableCategories));
-            }
-        }
-
-
+        private ObservableCollection<AnswerModel> _avilableAnswers = new ObservableCollection<AnswerModel>();
         public ObservableCollection<AnswerModel> AvilableAnswers
         {
             get
@@ -86,6 +51,67 @@ namespace QuizApp.ViewModels
             {
                 _selectedAnswer = value;
                 NotifyPropertyChanged(nameof(SelectedAnswer));
+            }
+        }
+
+
+        private List<QuestionModel> _avilableQuestions;
+        public List<QuestionModel> AvilableQuestions
+        {
+            get
+            {
+                return _avilableQuestions;
+            }
+            set
+            {
+                _avilableQuestions = value;
+                NotifyPropertyChanged(nameof(AvilableQuestions));
+            }
+        }
+
+        private QuestionModel _selectedQuestion;
+        public QuestionModel SelectedQuestion
+        {
+            get
+            {
+                return _selectedQuestion;
+            }
+            set
+            {
+                _selectedQuestion = value;
+                GetAnswers(SelectedQuestion);
+                SetSelectedCategory(SelectedQuestion);
+                NotifyPropertyChanged(nameof(SelectedQuestion));
+            }
+        }
+
+
+        private List<CategoryModel> _avilableCategories;
+        public List<CategoryModel> AvilableCategories
+        {
+            get
+            {
+                return _avilableCategories;
+            }
+            set
+            {
+                _avilableCategories = value;
+                NotifyPropertyChanged(nameof(AvilableCategories));
+            }
+        }
+
+        private CategoryModel _selectedCategory;
+        public CategoryModel SelectedCategory
+        {
+            get
+            {
+                return _selectedCategory;
+            }
+            set
+            {
+                _selectedCategory = value;
+                SelectedQuestion.AssignQuestion(SelectedCategory);
+                NotifyPropertyChanged(nameof(SelectedCategory));
             }
         }
 
@@ -160,15 +186,49 @@ namespace QuizApp.ViewModels
 
         #endregion
 
+        #region Fields
+        private readonly CategoriesRepository _categoriesRepository;
+        private readonly QuestionsRepository _questionsRepository;
+        private readonly AnswerRepository _answerRepository;
+        #endregion
+
         #region Private Methods
         private void SetInitialData()
         {
-            AvilableCategories = new CategoriesRepository().GetAllCategories();
+            GetCategories();
+            GetQuestions();
             _saveQuestion = new RelayCommand(x => SaveQuestion_Clicked());
             _createQuestion = new RelayCommand(x => CreateQuestion_Clicked());
             _removeQuestion = new RelayCommand(x => RemoveQuestion_Clicked());
             _addAnswer = new RelayCommand(x => AddAnswer_Clicked());
             _removeAnswer = new RelayCommand(x => RemoveAnswer_Clicked());
+        }
+
+
+        private void GetQuestions()
+        {
+            AvilableQuestions = _questionsRepository.ListOfQuestions();
+        }
+
+        private void GetCategories()
+        {
+            AvilableCategories = _categoriesRepository.GetAllCategories();
+        }
+
+        private void GetAnswers(QuestionModel selectedQuestion)
+        {
+            if (SelectedQuestion != null)
+            {
+                AvilableAnswers = new ObservableCollection<AnswerModel>(_answerRepository.ListOfAnswers(SelectedQuestion.Id));
+            }
+        }
+
+        private void SetSelectedCategory(QuestionModel selectedQuestion)
+        {
+            if (selectedQuestion != null)
+            {
+                SelectedCategory = selectedQuestion.assignedCategory;
+            }
         }
 
         private void RemoveAnswer_Clicked()
@@ -199,7 +259,9 @@ namespace QuizApp.ViewModels
 
         private void SaveQuestion_Clicked()
         {
-            throw new NotImplementedException();
+            _questionsRepository.UpdateQuestion(SelectedQuestion);
+            GetQuestions();
+            GetCategories();// To jest słabe
         }
         #endregion
 
@@ -209,6 +271,9 @@ namespace QuizApp.ViewModels
         #region Constructor
         public QuestionsViewModel()
         {
+            _answerRepository = new AnswerRepository();
+            _categoriesRepository = new CategoriesRepository();
+            _questionsRepository = new QuestionsRepository();
             SetInitialData();
         }
 

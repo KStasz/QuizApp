@@ -9,8 +9,9 @@ namespace Domain.Models
     public class AnswerModel
     {
         public int Id { get; set; }
-        public string Content { get; set; }
-        public bool IsCorrectAnswer { get; set; }
+        public string AnswerContent { get; set; }
+        public int QuestionId { get; set; }
+        public bool IsCorrect { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreationDate { get; set; }
     }
