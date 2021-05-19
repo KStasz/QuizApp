@@ -1,4 +1,5 @@
 ﻿using DataAccess.Repositories;
+using Domain.Interfaces;
 using Domain.Models;
 using QuizApp.AdminPages;
 using QuizApp.ViewModelHelpers;
@@ -110,11 +111,11 @@ namespace QuizApp.ViewModels
             set
             {
                 _selectedCategory = value;
-                SelectedQuestion.AssignQuestion(SelectedCategory);
+                if (SelectedQuestion != null)
+                    SelectedQuestion.AssignQuestion(SelectedCategory);
                 NotifyPropertyChanged(nameof(SelectedCategory));
             }
         }
-
 
         private string _questionName;
         public string QuestionName
@@ -187,9 +188,9 @@ namespace QuizApp.ViewModels
         #endregion
 
         #region Fields
-        private readonly CategoriesRepository _categoriesRepository;
-        private readonly QuestionsRepository _questionsRepository;
-        private readonly AnswerRepository _answerRepository;
+        private readonly ICategoriesRepository _categoriesRepository;
+        private readonly IQuestionsRepository _questionsRepository;
+        private readonly IAnswerRepository _answerRepository;
         #endregion
 
         #region Private Methods
@@ -203,7 +204,6 @@ namespace QuizApp.ViewModels
             _addAnswer = new RelayCommand(x => AddAnswer_Clicked());
             _removeAnswer = new RelayCommand(x => RemoveAnswer_Clicked());
         }
-
 
         private void GetQuestions()
         {
@@ -260,8 +260,9 @@ namespace QuizApp.ViewModels
         private void SaveQuestion_Clicked()
         {
             _questionsRepository.UpdateQuestion(SelectedQuestion);
-            GetQuestions();
-            GetCategories();// To jest słabe
+            //GetQuestions();
+            //SelectedCategory = new CategoryModel() { Name = "" };
+            //GetCategories();// To jest słabe
         }
         #endregion
 
@@ -269,11 +270,11 @@ namespace QuizApp.ViewModels
         #endregion
 
         #region Constructor
-        public QuestionsViewModel()
+        public QuestionsViewModel(IAnswerRepository answerRepository, ICategoriesRepository categoriesRepository, IQuestionsRepository questionsRepository)
         {
-            _answerRepository = new AnswerRepository();
-            _categoriesRepository = new CategoriesRepository();
-            _questionsRepository = new QuestionsRepository();
+            _answerRepository = answerRepository;
+            _categoriesRepository = categoriesRepository;
+            _questionsRepository = questionsRepository;
             SetInitialData();
         }
 

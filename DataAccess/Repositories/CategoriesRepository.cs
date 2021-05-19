@@ -10,11 +10,11 @@ namespace DataAccess.Repositories
 {
     public class CategoriesRepository : ICategoriesRepository
     {
-        private readonly SqlDataAccessRepository _sqlDataAccess;
+        private readonly ISqlDataAccess _sqlDataAccess;
 
-        public CategoriesRepository()
+        public CategoriesRepository(ISqlDataAccess sqlDataAccess)
         {
-            _sqlDataAccess = new SqlDataAccessRepository();
+            _sqlDataAccess = sqlDataAccess;
         }
 
         public List<CategoryModel> GetAllCategories()

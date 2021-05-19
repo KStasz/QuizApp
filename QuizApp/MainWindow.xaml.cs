@@ -1,6 +1,7 @@
 ﻿using DataAccess.Repositories;
 using Domain.Models;
 using Domain.StaticMembers;
+using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,15 +24,17 @@ namespace QuizApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly IApplicationUserRepository _applicationUserRepository;
+
+        public MainWindow(IApplicationUserRepository applicationUserRepository)
         {
             InitializeComponent();
+            _applicationUserRepository = applicationUserRepository;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ApplicationUserRepository userRepository = new ApplicationUserRepository();
-            UserLoginState.LogIn(userRepository.LogIn(txt_UserName.Text, txt_Password.Password));
+            UserLoginState.LogIn(_applicationUserRepository.LogIn(txt_UserName.Text, txt_Password.Password));
             if (UserLoginState.LoggedInState)
             {
                 if (UserLoginState.loggedUser.role.RoleName.ToLower() == "administrator")

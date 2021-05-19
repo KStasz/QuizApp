@@ -11,11 +11,11 @@ namespace DataAccess.Repositories
 {
     public class ApplicationUserRepository : IApplicationUserRepository
     {
-        private readonly SqlDataAccessRepository _sqlDataAccess;
+        private readonly ISqlDataAccess _sqlDataAccess;
 
-        public ApplicationUserRepository()
+        public ApplicationUserRepository(ISqlDataAccess sqlDataAccess)
         {
-            _sqlDataAccess = new SqlDataAccessRepository();
+            _sqlDataAccess = sqlDataAccess;
         }
 
         public ApplicationUsers LogIn(string username, string password)
