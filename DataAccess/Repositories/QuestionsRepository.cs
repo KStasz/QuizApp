@@ -18,10 +18,10 @@ namespace DataAccess.Repositories
             _sqlDataAccess = sqlDataAccess;
             _categoriesRepository = categoriesRepository;
         }
-        public void AddQuestion(QuestionModel item)
+        public int AddQuestion(QuestionModel item)
         {
-            string sql = "INSERT INTO Questions (QuestionContent, CategoryId) VALUES (@content, @categoryId)";
-            _sqlDataAccess.SaveData(sql, new { content = item.QuestionContent, categoryId = item.CategoryId });
+            string sql = "INSERT INTO Questions (Name) VALUES (@name);SELECT last_insert_rowid();";
+            return _sqlDataAccess.LoadData<int, dynamic>(sql, new { name = item.Name }).FirstOrDefault();
         }
 
         public QuestionModel GetQuestion(int QuestionId)
@@ -29,7 +29,10 @@ namespace DataAccess.Repositories
             string sql = "SELECT Id, Name, QuestionContent, CategoryId, IsActive, CreationDate FROM Questions WHERE Id = @id";
             var result = _sqlDataAccess.LoadData<QuestionModel, dynamic>(sql, new { id = QuestionId }).ToList();
             if (result != null && result.Count > 0)
+            {
+                result.FirstOrDefault().AssignCategory(_categoriesRepository.GetCategory(result.FirstOrDefault().CategoryId));
                 return result.FirstOrDefault();
+            }
             return new QuestionModel();
         }
 
@@ -72,7 +75,7 @@ namespace DataAccess.Repositories
         public void UpdateQuestion(QuestionModel item)
         {
             string sql = "UPDATE Questions SET Name = @name, QuestionContent = @content, CategoryId = @cid WHERE Id = @id";
-            _sqlDataAccess.SaveData(sql, new { name = item.Name, content = item.QuestionContent, cid = item.CategoryId, id = item.Id});
+            _sqlDataAccess.SaveData(sql, new { name = item.Name, content = item.QuestionContent, cid = item.CategoryId, id = item.Id });
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Domain.Models
         public DateTime CreationDate { get; set; }
         public CategoryModel assignedCategory { get; set; }
 
-        public void AssignQuestion(CategoryModel model)
+        public void AssignCategory(CategoryModel model)
         {
             assignedCategory = model;
             CategoryId = model.Id;

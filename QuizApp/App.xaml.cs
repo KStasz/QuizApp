@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using QuizApp.AdminPages;
+using QuizApp.AdminPages.Questions;
+using QuizApp.AdminPages.Users;
 using QuizApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -50,6 +52,8 @@ namespace QuizApp
             services.AddSingleton<MainWindow>();
             services.AddSingleton<QuestionsViewModel>();
             services.AddTransient<QuestionsSettings>();
+            services.AddSingleton<UserViewModel>();
+            services.AddTransient<UsersPage>();
         }
 
         protected override async void OnStartup(StartupEventArgs e)

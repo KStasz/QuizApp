@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace QuizApp.AdminPages
+namespace QuizApp.AdminPages.Questions
 {
     /// <summary>
     /// Logika interakcji dla klasy QuestionsSettings.xaml

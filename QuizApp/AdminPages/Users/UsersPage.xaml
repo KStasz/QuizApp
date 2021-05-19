@@ -1,0 +1,91 @@
+﻿<Page x:Class="QuizApp.AdminPages.Users.UsersPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:QuizApp.AdminPages.Users"
+      mc:Ignorable="d" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal" 
+      TextOptions.TextRenderingMode="Auto"        
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="UsersPage"
+      DataContext="{Binding Source={StaticResource Locator}, Path=userViewModel}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button
+                Command="{Binding Path=BtnCreateUser}"
+                Grid.Column="0"
+                Margin="10,0,10,0"
+                Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
+                Content="Dodaj nowego użytkownika" />
+            <ComboBox ItemsSource="{Binding Path=AvilableApplicationUsers, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedApplicationUsers}" SelectedValue="{Binding Path=SelectedApplicationUsers.Username}" DisplayMemberPath="Username" SelectedValuePath="Username" Margin="10,0,10,0" Grid.Column="1" materialDesign:HintAssist.Hint="Użytkownicy"
+                materialDesign:HintAssist.IsFloating="True" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel Width="500">
+                <TextBox
+                    Text="{Binding Path=SelectedApplicationUsers.Username, Mode=TwoWay}"
+                    materialDesign:HintAssist.Hint="Nazwa użytkownika"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    VerticalAlignment="Center" />
+                <TextBox
+                    Text="{Binding Path=SelectedApplicationUsers.Password, Mode=TwoWay}"
+                    materialDesign:HintAssist.Hint="Hasło"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    VerticalAlignment="Center" />
+                <TextBox
+                    Text="{Binding Path=SelectedApplicationUsers.Name, Mode=TwoWay}"
+                    materialDesign:HintAssist.Hint="Imię"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    VerticalAlignment="Center" />
+                <TextBox
+                    Text="{Binding Path=SelectedApplicationUsers.Surname, Mode=TwoWay}"
+                    materialDesign:HintAssist.Hint="Nazwisko"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    VerticalAlignment="Center" />
+                <ComboBox ItemsSource="{Binding Path=AvilableRoles, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedApplicationUserRoles}" SelectedValue="{Binding Path=SelectedApplicationUserRoles.RoleName}" DisplayMemberPath="RoleName" SelectedValuePath="RoleName" Grid.Column="1" materialDesign:HintAssist.Hint="Dostępne role"
+                    materialDesign:HintAssist.IsFloating="True" />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="0"
+                Command="{Binding Path=BtnSave}"
+                HorizontalAlignment="Right"
+                Margin="0,0,10,0"
+                Width="200"
+                Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                Content="Zapisz" Background="Green" />
+            <Button
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                Command="{Binding Path=BtnDelete}"
+                HorizontalAlignment="Left"
+                Width="200"
+                VerticalAlignment="Stretch"
+                Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                Content="Usuń" Background="Red" />
+        </Grid>
+    </Grid>
+</Page>

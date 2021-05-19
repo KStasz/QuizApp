@@ -13,14 +13,15 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="AdminPanel" Height="500" Width="890">
+        Title="Panel zarządzania aplikacją" Height="500" Width="890">
 
     <Grid>
         <DockPanel>
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Height="45">
                 <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" x:Name="Questions" Content="Pytania" Click="Button_Click" Cursor="Hand" />
+                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" x:Name="Users" Content="Użytkownicy" Cursor="Hand" Click="Button_Click" />
             </StackPanel>
-            <Frame DockPanel.Dock="Bottom" x:Name="mainFrame"/>
+            <Frame NavigationUIVisibility="Hidden" DockPanel.Dock="Bottom" x:Name="mainFrame"/>
         </DockPanel>
     </Grid>
 </Window>

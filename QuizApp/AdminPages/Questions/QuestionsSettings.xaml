@@ -1,10 +1,10 @@
-﻿<Page x:Class="QuizApp.AdminPages.QuestionsSettings"
+﻿<Page x:Class="QuizApp.AdminPages.Questions.QuestionsSettings"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
-      xmlns:local="clr-namespace:QuizApp.AdminPages"
+      xmlns:local="clr-namespace:QuizApp.AdminPages.Questions"
       mc:Ignorable="d"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -15,7 +15,6 @@
       Background="{DynamicResource MaterialDesignPaper}"
       FontFamily="{DynamicResource MaterialDesignFont}"
       d:DesignHeight="450" d:DesignWidth="800"
-      d:DataContext="{Binding QuestionsViewModel}"
       Title="QuestionsSettings"
       DataContext="{Binding Source={StaticResource Locator}, Path=questionsViewModel}">
     
@@ -48,8 +47,10 @@
             <TextBox Text="{Binding Path=SelectedQuestion.Name, Mode=TwoWay}"  Margin="10" materialDesign:HintAssist.Hint="Nazwa pytania" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             VerticalAlignment="Center" Cursor="IBeam" />
             <ComboBox
-                ItemsSource="{Binding Path=AvilableQuestions}"
+                ItemsSource="{Binding Path=AvilableQuestions, Mode=TwoWay}"
                 SelectedItem="{Binding Path=SelectedQuestion}"
+                SelectedValue="{Binding Path=SelectedQuestion.Name}"
+                SelectedValuePath="Name"
                 DisplayMemberPath="Name"
                 materialDesign:HintAssist.Hint="Dostępne pytania"
                 materialDesign:HintAssist.FontFamily="Verdana"
@@ -68,7 +69,9 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
-                <ComboBox ItemsSource="{Binding Path=AvilableCategories, Mode=TwoWay}" SelectedValue="{Binding Path=SelectedCategory.Name}" SelectedItem="{Binding Path=SelectedCategory}" SelectedValuePath="Name" materialDesign:HintAssist.Hint="Wybierz kategorię" materialDesign:HintAssist.FontFamily="Verdana"
+                <ComboBox ItemsSource="{Binding Path=AvilableCategories, Mode=TwoWay}" 
+                          SelectedValue="{Binding Path=SelectedCategory.Name}" 
+                          SelectedItem="{Binding Path=SelectedCategory}" SelectedValuePath="Name" materialDesign:HintAssist.Hint="Wybierz kategorię" materialDesign:HintAssist.FontFamily="Verdana"
                     Grid.Column="1" Margin="10" DisplayMemberPath="Name"
                     Style="{StaticResource MaterialDesignFloatingHintComboBox}" Cursor="Hand">
                 </ComboBox>

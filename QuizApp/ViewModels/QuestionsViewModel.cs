@@ -112,7 +112,7 @@ namespace QuizApp.ViewModels
             {
                 _selectedCategory = value;
                 if (SelectedQuestion != null)
-                    SelectedQuestion.AssignQuestion(SelectedCategory);
+                    SelectedQuestion.AssignCategory(SelectedCategory);
                 NotifyPropertyChanged(nameof(SelectedCategory));
             }
         }
@@ -233,7 +233,8 @@ namespace QuizApp.ViewModels
 
         private void RemoveAnswer_Clicked()
         {
-            AvilableAnswers.Remove(SelectedAnswer);
+            _answerRepository.RemoveAnswer(SelectedAnswer);
+            AvilableAnswers = new ObservableCollection<AnswerModel>(_answerRepository.ListOfAnswers(SelectedQuestion.Id));
         }
 
         private void AddAnswer_Clicked()
@@ -241,28 +242,42 @@ namespace QuizApp.ViewModels
             var answerAddWindow = new AnswerAddWindow();
             answerAddWindow.ShowDialog();
             var answer = answerAddWindow.GetAnswer();
+            answer.QuestionId = SelectedQuestion.Id;
             if (answer != null)
             {
-                AvilableAnswers.Add(answer);
+                _answerRepository.AddAnswer(answer);
+                AvilableAnswers = new ObservableCollection<AnswerModel>(_answerRepository.ListOfAnswers(SelectedQuestion.Id));
             }
         }
 
         private void RemoveQuestion_Clicked()
         {
-            throw new NotImplementedException();
+            _questionsRepository.RemoveQuestion(SelectedQuestion);
+            GetQuestions();
+            AvilableAnswers = new ObservableCollection<AnswerModel>();
+            SelectedCategory = new CategoryModel() { Name = "" };
         }
 
         private void CreateQuestion_Clicked()
         {
-            throw new NotImplementedException();
+            var createQuestion = new CreateQuestionWindow();
+            createQuestion.ShowDialog();
+            if (createQuestion.DialogResult == true)
+            {
+                QuestionModel model = new QuestionModel();
+                model.Name = createQuestion.QuestionName;
+                var id = _questionsRepository.AddQuestion(model);
+                AvilableQuestions = _questionsRepository.ListOfQuestions();
+                SelectedQuestion = _questionsRepository.GetQuestion(id);
+            }
         }
 
         private void SaveQuestion_Clicked()
         {
             _questionsRepository.UpdateQuestion(SelectedQuestion);
-            //GetQuestions();
-            //SelectedCategory = new CategoryModel() { Name = "" };
-            //GetCategories();// To jest słabe
+            GetQuestions();
+            AvilableAnswers = new ObservableCollection<AnswerModel>();
+            SelectedCategory = new CategoryModel() { Name = "" };
         }
         #endregion
 

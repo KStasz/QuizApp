@@ -31,7 +31,11 @@ namespace QuizApp
             Button btn = (Button)sender;
             if (btn == Questions)
             {
-                mainFrame.Source = new Uri("AdminPages/QuestionsSettings.xaml", UriKind.Relative);
+                mainFrame.Source = new Uri("AdminPages/Questions/QuestionsSettings.xaml", UriKind.Relative);
+            }
+            else if (btn == Users)
+            {
+                mainFrame.Source = new Uri("AdminPages/Users/UsersPage.xaml", UriKind.Relative);
             }
         }
     }

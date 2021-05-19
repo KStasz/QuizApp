@@ -11,5 +11,7 @@ namespace QuizApp.ViewModelHelpers
     public class ViewModelLocator
     {
         public QuestionsViewModel questionsViewModel => App.ServiceProvider.GetRequiredService<QuestionsViewModel>();
+
+        public UserViewModel userViewModel => App.ServiceProvider.GetRequiredService<UserViewModel>();
     }
 }

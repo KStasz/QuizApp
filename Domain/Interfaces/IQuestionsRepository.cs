@@ -12,7 +12,7 @@ namespace Domain.Interfaces
         List<QuestionModel> ListOfQuestions();
         List<QuestionModel> ListOfQuestions(int CategoryId);
         QuestionModel GetQuestion(int QuestionId);
-        void AddQuestion(QuestionModel item);
+        int AddQuestion(QuestionModel item);
         void RemoveQuestion(QuestionModel item);
         void UpdateQuestion(QuestionModel item);
     }
