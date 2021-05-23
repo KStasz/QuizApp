@@ -28,7 +28,7 @@ namespace QuizApp.ViewModels
         #endregion
 
         #region Fields
-        
+
         private readonly IGameRepository _gameRepository;
         #endregion
 
@@ -37,11 +37,11 @@ namespace QuizApp.ViewModels
         private GameQuestion _actualQuestion;
         public GameQuestion ActualQuestion
         {
-            get 
+            get
             {
-                return _actualQuestion; 
+                return _actualQuestion;
             }
-            set 
+            set
             {
                 _actualQuestion = value;
                 AnswerModels = new ObservableCollection<AnswerModel>(ActualQuestion.Question.Answers);
@@ -52,30 +52,36 @@ namespace QuizApp.ViewModels
         private ObservableCollection<AnswerModel> _answerModels = new ObservableCollection<AnswerModel>();
         public ObservableCollection<AnswerModel> AnswerModels
         {
-            get 
+            get
             {
-                return _answerModels; 
+                return _answerModels;
             }
-            set 
+            set
             {
                 _answerModels = value;
                 NotifyPropertyChanged(nameof(AnswerModels));
             }
         }
 
-
-
         private GameHeader _gameHeader;
         public GameHeader GameHeader
         {
-            get 
+            get
             {
-                return _gameHeader; 
+                return _gameHeader;
             }
-            set 
+            set
             {
                 _gameHeader = value;
-                ActualQuestion = GameHeader.Qustions.First();
+                var x = GameHeader.Qustions.FirstOrDefault(x => x.UserAnswerId == 0);
+                if (x != null)
+                {
+                    ActualQuestion = x;
+                }
+                else
+                {
+                    EndGame();
+                }
                 NotifyPropertyChanged(nameof(GameHeader));
             }
         }
@@ -91,7 +97,18 @@ namespace QuizApp.ViewModels
 
         private void BtnNextQuestion_Click()
         {
-            MessageBox.Show("Działa");
+            var answers = AnswerModels.Where(x => x.IsSelected == true).ToList();
+            if (answers.Count > 0)
+            {
+                ActualQuestion.Answer = answers.FirstOrDefault();
+                _gameRepository.SendAnswer(ActualQuestion);
+                GameHeader = _gameRepository.GetGameHeader(gameId);
+            }
+        }
+
+        private void EndGame()
+        {
+            _gameRepository.FinishGame(GameHeader);
         }
         #endregion
 
@@ -101,11 +118,11 @@ namespace QuizApp.ViewModels
 
         public ICommand BtnNextQuestion
         {
-            get 
+            get
             {
-                return _btnNextQuestion; 
+                return _btnNextQuestion;
             }
-            private set {  }
+            private set { }
         }
 
         #endregion

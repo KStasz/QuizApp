@@ -39,7 +39,7 @@ namespace DataAccess.Repositories
         public void FinishGame(GameHeader header)
         {
             string sql = "UPDATE GameHeaders SET IsFinished = 1 WHERE Id = @hId";
-            _sqlDataAccess.SaveData(sql, new { qId = header.Id });
+            _sqlDataAccess.SaveData(sql, new { hId = header.Id });
         }
 
         public GameHeader GetGameHeader(int gameId)
