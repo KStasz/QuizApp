@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizApp", "QuizApp\QuizApp.csproj", "{76DB1E21-461D-4BD6-BB26-23975790183D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizApp", "QuizApp\QuizApp.csproj", "{76DB1E21-461D-4BD6-BB26-23975790183D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BF068C0C-A229-4286-A609-1E100FA2799A} = {BF068C0C-A229-4286-A609-1E100FA2799A}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{BF068C0C-A229-4286-A609-1E100FA2799A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{BF068C0C-A229-4286-A609-1E100FA2799A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0CD96A8A-55EF-44CA-8560-AE70860DB136} = {0CD96A8A-55EF-44CA-8560-AE70860DB136}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{0CD96A8A-55EF-44CA-8560-AE70860DB136}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{0CD96A8A-55EF-44CA-8560-AE70860DB136}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

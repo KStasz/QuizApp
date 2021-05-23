@@ -12,11 +12,13 @@ namespace DataAccess.Repositories
     {
         private readonly ISqlDataAccess _sqlDataAccess;
         private readonly ICategoriesRepository _categoriesRepository;
+        private readonly IAnswerRepository _answerRepository;
 
-        public QuestionsRepository(ISqlDataAccess sqlDataAccess, ICategoriesRepository categoriesRepository)
+        public QuestionsRepository(ISqlDataAccess sqlDataAccess, ICategoriesRepository categoriesRepository, IAnswerRepository answerRepository)
         {
             _sqlDataAccess = sqlDataAccess;
             _categoriesRepository = categoriesRepository;
+            _answerRepository = answerRepository;
         }
         public int AddQuestion(QuestionModel item)
         {
@@ -31,6 +33,7 @@ namespace DataAccess.Repositories
             if (result != null && result.Count > 0)
             {
                 result.FirstOrDefault().AssignCategory(_categoriesRepository.GetCategory(result.FirstOrDefault().CategoryId));
+                result.FirstOrDefault().Answers = _answerRepository.ListOfAnswers(result.FirstOrDefault().Id);
                 return result.FirstOrDefault();
             }
             return new QuestionModel();

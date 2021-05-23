@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuizApp.UserWindows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Domain.Models;
+using Domain.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace QuizApp
 {
@@ -22,6 +26,13 @@ namespace QuizApp
         public UserPanel()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var newGameConfig = App.ServiceProvider.GetRequiredService<NewGameConfig>();
+            newGameConfig.Show();
+            this.Close();
         }
     }
 }

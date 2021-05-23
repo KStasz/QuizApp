@@ -14,6 +14,7 @@ namespace Domain.Models
         public int CategoryId { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreationDate { get; set; }
+        public List<AnswerModel> Answers { get; set; }
         public CategoryModel assignedCategory { get; set; }
 
         public void AssignCategory(CategoryModel model)

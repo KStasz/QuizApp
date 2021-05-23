@@ -13,6 +13,7 @@ namespace Domain.Models
         public int QuestionId { get; set; }
         public bool IsCorrect { get; set; }
         public bool IsActive { get; set; }
+        public bool IsSelected { get; set; } = false;
         public DateTime CreationDate { get; set; }
     }
 }

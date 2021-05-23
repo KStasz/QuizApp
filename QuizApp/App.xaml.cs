@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using QuizApp.AdminPages;
 using QuizApp.AdminPages.Questions;
 using QuizApp.AdminPages.Users;
+using QuizApp.UserWindows;
 using QuizApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -49,9 +50,13 @@ namespace QuizApp
             services.AddTransient<IApplicationUserRepository, ApplicationUserRepository>();
             services.AddTransient<ICategoriesRepository, CategoriesRepository>();
             services.AddTransient<IQuestionsRepository, QuestionsRepository>();
+            services.AddTransient<IGameRepository, GameRepository>();
             services.AddSingleton<MainWindow>();
+            services.AddSingleton<NewGameConfig>();
             services.AddSingleton<QuestionsViewModel>();
             services.AddTransient<QuestionsSettings>();
+            services.AddSingleton<GameViewModel>();
+            services.AddTransient<GameWindow>();
             services.AddSingleton<UserViewModel>();
             services.AddTransient<UsersPage>();
         }

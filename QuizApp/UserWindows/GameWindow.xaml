@@ -1,0 +1,61 @@
+﻿<Window x:Class="QuizApp.UserWindows.GameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuizApp.UserWindows"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="" Height="450" Width="800"
+        DataContext="{Binding Source={StaticResource Locator}, Path=gameViewModel}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox
+            Grid.Row="0"
+            Grid.Column="1"
+            Header="Pytanie"
+            Style="{DynamicResource MaterialDesignGroupBox}"
+            Margin="16"
+            materialDesign:ShadowAssist.ShadowDepth="Depth3"
+            BorderThickness="0">
+                <TextBlock
+                    Margin="6,6,6,6"
+                    TextWrapping="Wrap"
+                    Text="{Binding Path=ActualQuestion.Question.QuestionContent}" />
+        </GroupBox>
+        <DataGrid
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="10"
+            ItemsSource="{Binding Path=AnswerModels}"
+            CanUserAddRows="False"
+            AutoGenerateColumns="False"
+            SelectionUnit="Cell"
+            SelectionMode="Extended">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Header="Wybór" ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}" Binding="{Binding IsSelected}"></DataGridCheckBoxColumn>
+                <DataGridTextColumn ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}" Header="Odpowiedź" Binding="{Binding AnswerContent}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Column="2" Grid.RowSpan="2">
+            <Button
+                Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                Content="Następne pytanie" Command="{Binding Path=BtnNextQuestion}" />
+        </Grid>
+    </Grid>
+</Window>

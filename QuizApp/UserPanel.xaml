@@ -15,6 +15,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="Quiz App" Height="450" Width="800">
     <Grid>
-        
+        <Button
+            Style="{StaticResource MaterialDesignRaisedDarkButton}" Content="Rozpocznij nową grę" Width="500" Cursor="Hand" Click="Button_Click" />
     </Grid>
 </Window>

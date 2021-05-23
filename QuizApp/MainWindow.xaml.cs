@@ -55,5 +55,13 @@ namespace QuizApp
                 MessageBox.Show("Nie odnaleziono użytkownika, lub podane hasło jest nieprawidłowe", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void txt_Password_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Button_Click(null, null);
+            }
+        }
     }
 }
