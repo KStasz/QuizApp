@@ -32,7 +32,28 @@ namespace QuizApp
         {
             var newGameConfig = App.ServiceProvider.GetRequiredService<NewGameConfig>();
             newGameConfig.Show();
-            this.Close();
+            newGameConfig.Closed += NewGameConfig_Closed;
+            this.Hide();
         }
+
+        private void NewGameConfig_Closed(object sender, EventArgs e)
+        {
+            this.Show();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var resultWindow = App.ServiceProvider.GetRequiredService<UserResultWindow>();
+            resultWindow.Show();
+            resultWindow.Closed += ResultWindow_Closed;
+            this.Hide();
+        }
+
+        private void ResultWindow_Closed(object sender, EventArgs e)
+        {
+            this.Show();
+        }
+
+
     }
 }

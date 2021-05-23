@@ -10,12 +10,14 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using QuizApp.ViewModelHelpers;
 using System.Windows;
+using QuizApp.UserWindows;
 
 namespace QuizApp.ViewModels
 {
-    public class GameViewModel : INotifyPropertyChanged
+    public class GameViewModel : INotifyPropertyChanged, ICloseable
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<EventArgs> RequestClose;
 
         protected void NotifyPropertyChanged(string PropertyName)
         {
@@ -30,6 +32,7 @@ namespace QuizApp.ViewModels
         #region Fields
 
         private readonly IGameRepository _gameRepository;
+        private readonly IResultsRepository _resultsRepository;
         #endregion
 
         #region Properties
@@ -109,13 +112,15 @@ namespace QuizApp.ViewModels
         private void EndGame()
         {
             _gameRepository.FinishGame(GameHeader);
+            var result = GameHeader.Qustions.SelectMany(x => x.Question.Answers.Where(y => y.Id == x.UserAnswerId).ToList()).ToList();
+            MessageBox.Show($"Poprawne odpowiedzi: {result.Where(x => x.IsCorrect == true).Count()} z {result.Count()}");
+            RequestClose.Invoke(this, EventArgs.Empty);
         }
         #endregion
 
         #region ButtonProperties
 
         private ICommand _btnNextQuestion;
-
         public ICommand BtnNextQuestion
         {
             get
@@ -125,12 +130,14 @@ namespace QuizApp.ViewModels
             private set { }
         }
 
+
         #endregion
 
         #region Constructor
-        public GameViewModel(IGameRepository gameRepository)
+        public GameViewModel(IGameRepository gameRepository, IResultsRepository resultsRepository)
         {
             _gameRepository = gameRepository;
+            _resultsRepository = resultsRepository;
             SetInitialData();
         }
         #endregion

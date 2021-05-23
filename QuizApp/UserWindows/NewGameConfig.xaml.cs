@@ -80,6 +80,12 @@ namespace QuizApp.UserWindows
             GameViewModel.gameId = gameId;
             var gameWindow = new GameWindow();
             gameWindow.Show();
+            gameWindow.Closed += GameWindow_Closed;
+            this.Hide();
+        }
+
+        public void GameWindow_Closed(object sender, EventArgs e)
+        {
             this.Close();
         }
 

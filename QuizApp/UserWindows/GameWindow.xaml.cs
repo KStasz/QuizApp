@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Domain.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,13 @@ namespace QuizApp.UserWindows
         public GameWindow()
         {
             InitializeComponent();
+            Loaded += (s, e) =>
+            {
+                if (DataContext is ICloseable)
+                {
+                    (DataContext as ICloseable).RequestClose += (_, __) => this.Close();
+                }
+            };
         }
     }
 }

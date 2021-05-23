@@ -51,12 +51,14 @@ namespace QuizApp
             services.AddTransient<ICategoriesRepository, CategoriesRepository>();
             services.AddTransient<IQuestionsRepository, QuestionsRepository>();
             services.AddTransient<IGameRepository, GameRepository>();
+            services.AddTransient<IResultsRepository, ResultRepository>();
             services.AddSingleton<MainWindow>();
-            services.AddSingleton<NewGameConfig>();
+            services.AddTransient<NewGameConfig>();
             services.AddSingleton<QuestionsViewModel>();
             services.AddTransient<QuestionsSettings>();
-            services.AddSingleton<GameViewModel>();
+            services.AddTransient<GameViewModel>();
             services.AddTransient<GameWindow>();
+            services.AddTransient<UserResultWindow>();
             services.AddSingleton<UserViewModel>();
             services.AddTransient<UsersPage>();
         }
